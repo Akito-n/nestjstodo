@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common'
+import { Controller, Get, Post, Body, Param, ParseIntPipe} from '@nestjs/common'
 import { CreateCatDto } from '../dto/create-cat.dto'
 import {CatsService } from '../services/CatsService'
 import { Cat } from '../interfaces/cat.interface'
@@ -8,6 +8,11 @@ import { Cat } from '../interfaces/cat.interface'
 
 export class CatsContoller {
   constructor(private catsService: CatsService){}
+
+  @Get(':id')
+async findOne(@Param('id', ParseIntPipe) id: number) {
+  return this.catsService.findOne(id);
+}
 
   @Post()
   async create(@Body() createCatDto :CreateCatDto){
