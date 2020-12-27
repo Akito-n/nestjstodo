@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe} from '@nestjs/common'
+import { Controller, Get, Post, Body, Param, ParseIntPipe, UsePipes, ValidationPipe} from '@nestjs/common'
 import { CreateCatDto } from '../dto/create-cat.dto'
 import {CatsService } from '../services/CatsService'
 import { Cat } from '../interfaces/cat.interface'
@@ -15,7 +15,7 @@ async findOne(@Param('id', ParseIntPipe) id: number) {
 }
 
   @Post()
-  async create(@Body() createCatDto :CreateCatDto){
+  async create(@Body(new ValidationPipe()) createCatDto :CreateCatDto){
     this.catsService.create(createCatDto)
   }
 
@@ -23,4 +23,3 @@ async findOne(@Param('id', ParseIntPipe) id: number) {
   async findAll(): Promise<Cat[]> {
     return this.catsService.findAll()
   }
-}
